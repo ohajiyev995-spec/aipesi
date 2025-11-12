@@ -1,0 +1,443 @@
+export const HOUSES = [
+  {
+    id: "gryffindor",
+    name: "Gryffindor",
+    founder: "Godric Gryffindor",
+    mascot: "Lion",
+    colors: ["Scarlet", "Gold"],
+    traits: ["Bravery", "Chivalry", "Courage"],
+    relic: "Sword of Gryffindor",
+    ghost: "Nearly Headless Nick",
+    img: "assets/img/gryffindor.webp",
+    summary:
+      "A house known for bravery and daring, founded by Godric Gryffindor.",
+    notableEvents: [
+      "Founded by Godric Gryffindor during the establishment of Hogwarts.",
+      "Home to the lion-hearted members of Dumbledore's Army.",
+    ],
+    timeline: [
+      {
+        year: 990,
+        title: "Gryffindor House Established",
+        description:
+          "Godric Gryffindor sets the tone for courageous witches and wizards.",
+        relatedId: "gryffindor",
+      },
+      {
+        year: 1994,
+        title: "Lionheart Victory in Quidditch Cup",
+        description:
+          "Members led by Harry Potter propel Gryffindor to win the House Cup.",
+        relatedId: "harry-potter",
+      },
+    ],
+  },
+  {
+    id: "hufflepuff",
+    name: "Hufflepuff",
+    founder: "Helga Hufflepuff",
+    mascot: "Badger",
+    colors: ["Canary Yellow", "Black"],
+    traits: ["Loyalty", "Patience", "Hard Work"],
+    relic: "Cup of Helga Hufflepuff",
+    ghost: "The Fat Friar",
+    img: "assets/img/hufflepuff.webp",
+    summary:
+      "Values inclusive loyalty and diligence, welcoming students with kind hearts.",
+    notableEvents: [
+      "Helga Hufflepuff enchanted the Hogwarts kitchens to feed every student.",
+      "Produced many healers and herbologists who served during the Battle of Hogwarts.",
+    ],
+    timeline: [
+      {
+        year: 990,
+        title: "Hufflepuff House Sworn to Unity",
+        description:
+          "Helga Hufflepuff vows to teach every student willing to learn.",
+        relatedId: "hufflepuff",
+      },
+      {
+        year: 1993,
+        title: "Herbology Excellence Recognized",
+        description:
+          "Professor Sprout leads students in cultivating mandrakes to save Petrified victims.",
+        relatedId: "neville-longbottom",
+      },
+    ],
+  },
+  {
+    id: "ravenclaw",
+    name: "Ravenclaw",
+    founder: "Rowena Ravenclaw",
+    mascot: "Eagle",
+    colors: ["Blue", "Bronze"],
+    traits: ["Wisdom", "Creativity", "Intellect"],
+    relic: "Diadem of Rowena Ravenclaw",
+    ghost: "The Grey Lady",
+    img: "assets/img/ravenclaw.webp",
+    summary:
+      "Champions curiosity and wit, challenging students to think beyond the ordinary.",
+    notableEvents: [
+      "Rowena Ravenclaw's enchanted diadem is said to enhance wisdom.",
+      "Students steward the tower riddles that guard their common room.",
+    ],
+    timeline: [
+      {
+        year: 990,
+        title: "Ravenclaw House Conceived",
+        description:
+          "Rowena Ravenclaw fashions a haven for inquisitive and clever minds.",
+        relatedId: "ravenclaw",
+      },
+      {
+        year: 1996,
+        title: "DA Strategies Perfected",
+        description:
+          "Luna Lovegood helps the DA craft inventive hex-defense during secret meetings.",
+        relatedId: "luna-lovegood",
+      },
+    ],
+  },
+  {
+    id: "slytherin",
+    name: "Slytherin",
+    founder: "Salazar Slytherin",
+    mascot: "Serpent",
+    colors: ["Emerald", "Silver"],
+    traits: ["Ambition", "Cunning", "Resourcefulness"],
+    relic: "Locket of Salazar Slytherin",
+    ghost: "The Bloody Baron",
+    img: "assets/img/slytherin.webp",
+    summary:
+      "Cultivates ambition and resourcefulness, producing leaders of every persuasion.",
+    notableEvents: [
+      "Salazar Slytherin champions pure-blood ideology during Hogwarts' founding debates.",
+      "Several members, including Draco Malfoy, later defy expectations by aiding Hogwarts.",
+    ],
+    timeline: [
+      {
+        year: 990,
+        title: "Slytherin Traditions Begin",
+        description:
+          "Salazar Slytherin selects students known for determination and resourceful minds.",
+        relatedId: "slytherin",
+      },
+      {
+        year: 1997,
+        title: "Shifting Loyalties",
+        description:
+          "Key Slytherins grapple with family legacies as the Second Wizarding War peaks.",
+        relatedId: "draco-malfoy",
+      },
+    ],
+  },
+];
+
+export const WIZARDS = [
+  {
+    id: "harry-potter",
+    name: "Harry Potter",
+    house: "Gryffindor",
+    years: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+    aliases: ["The Boy Who Lived"],
+    summary:
+      "Harry Potter survived Voldemort’s attack as an infant, grew up with the Dursleys, and entered Hogwarts in 1991. Guided by mentors and loyal friends, he faced basilisk venom, Triwizard peril, and Horcrux hunts while juggling Quidditch and studies. His courage and empathy united the wizarding community and culminated in Voldemort’s final defeat.",
+    notableEvents: ["Defeated Voldemort", "Founded Dumbledore’s Army"],
+    img: "assets/img/harry-potter.webp",
+    spoilerLevel: "high",
+    timeline: [
+      {
+        year: 1991,
+        title: "Arrives at Hogwarts",
+        description:
+          "Harry is sorted into Gryffindor and befriends Ron Weasley and Hermione Granger.",
+        relatedId: "harry-potter",
+      },
+      {
+        year: 1998,
+        title: "Battle of Hogwarts",
+        description: "Leads the final stand against Voldemort and his forces.",
+        relatedId: "harry-potter",
+      },
+    ],
+  },
+  {
+    id: "hermione-granger",
+    name: "Hermione Granger",
+    house: "Gryffindor",
+    years: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+    aliases: ["Brightest Witch of Her Age"],
+    summary:
+      "Hermione Granger, a Muggle-born prodigy, immerses herself in magical theory the moment she receives her Hogwarts letter. Her meticulous research, fierce sense of justice, and steadfast friendship keep Harry and Ron alive through every crisis. From Polyjuice brewing to Horcrux hunting, Hermione’s intellect continually shifts the balance away from dark forces.",
+    notableEvents: [
+      "Mastered the Polyjuice Potion in second year",
+      "Organized S.P.E.W.",
+    ],
+    img: "assets/img/hermione-granger.webp",
+    spoilerLevel: "low",
+    timeline: [
+      {
+        year: 1992,
+        title: "Polyjuice Expert",
+        description:
+          "Brews Polyjuice Potion to investigate the Chamber of Secrets attacks.",
+        relatedId: "hermione-granger",
+      },
+      {
+        year: 1997,
+        title: "Horcrux Strategist",
+        description:
+          "Devises plans and spells that keep the Horcrux hunt moving.",
+        relatedId: "hermione-granger",
+      },
+    ],
+  },
+  {
+    id: "ron-weasley",
+    name: "Ron Weasley",
+    house: "Gryffindor",
+    years: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+    aliases: ["Keeper of the Weasley Chessboard"],
+    summary:
+      "Ron Weasley joins Hogwarts with hand-me-down robes but an inexhaustible reserve of loyalty. He brings humor to tense moments, tactical insight to wizard chess-like conflicts, and crucial leadership on the Quidditch pitch. Though self-doubt shadows him, Ron repeatedly proves his courage and becomes indispensable in Harry and Hermione’s mission to end the war.",
+    notableEvents: [
+      "Sacrificed himself in wizard chess to save friends",
+      "Guarded the locket Horcrux",
+    ],
+    img: "assets/img/ron-weasley.webp",
+    spoilerLevel: "low",
+    timeline: [
+      {
+        year: 1991,
+        title: "Wizard Chess Sacrifice",
+        description:
+          "Strategizes the life-sized chess game guarding the Sorcerer’s Stone.",
+        relatedId: "ron-weasley",
+      },
+      {
+        year: 1997,
+        title: "Destroys Horcrux",
+        description:
+          "Returns to the hunt and destroys the locket Horcrux with Gryffindor’s sword.",
+        relatedId: "ron-weasley",
+      },
+    ],
+  },
+  {
+    id: "albus-dumbledore",
+    name: "Albus Dumbledore",
+    house: "Gryffindor",
+    years: [1892, 1893, 1894, 1895, 1896, 1897, 1898],
+    aliases: ["Headmaster of Hogwarts"],
+    summary:
+      "Albus Dumbledore rises from humble beginnings to become the most influential wizard of his generation. A master of Transfiguration and a tactician in global magical politics, he guides the Order of the Phoenix and orchestrates Harry’s path with careful foresight. His compassionate leadership anchors Hogwarts through decades of turmoil and war.",
+    notableEvents: [
+      "Defeated Gellert Grindelwald",
+      "Led the Order of the Phoenix",
+    ],
+    img: "assets/img/albus-dumbledore.webp",
+    spoilerLevel: "high",
+    timeline: [
+      {
+        year: 1945,
+        title: "Dual with Grindelwald",
+        description:
+          "Ends the reign of Gellert Grindelwald, shaping modern wizarding politics.",
+        relatedId: "albus-dumbledore",
+      },
+      {
+        year: 1996,
+        title: "Order Leadership",
+        description:
+          "Directs the Order from Hogwarts, guiding Harry through the Horcrux mystery.",
+        relatedId: "albus-dumbledore",
+      },
+    ],
+  },
+  {
+    id: "severus-snape",
+    name: "Severus Snape",
+    house: "Slytherin",
+    years: [1971, 1972, 1973, 1974, 1975, 1976, 1977],
+    aliases: ["Half-Blood Prince"],
+    summary:
+      "Severus Snape enters Hogwarts as a gifted yet isolated student with a passion for the darker corners of magic. His loyalties appear split between Death Eaters and the Order, but a hidden promise shapes his every move. Mastery of potions, Occlumency, and sacrifice positions him as one of Rowling’s most complex characters.",
+    notableEvents: [
+      "Invented advanced potions techniques",
+      "Acted as double agent in the Second Wizarding War",
+    ],
+    img: "assets/img/severus-snape.webp",
+    spoilerLevel: "high",
+    timeline: [
+      {
+        year: 1996,
+        title: "Half-Blood Prince Revelations",
+        description:
+          "Snape’s annotated textbook aids Harry before its true owner is exposed.",
+        relatedId: "severus-snape",
+      },
+      {
+        year: 1998,
+        title: "Vow Fulfilled",
+        description:
+          "His final actions reveal the depth of his loyalty and sacrifice.",
+        relatedId: "severus-snape",
+      },
+    ],
+  },
+  {
+    id: "minerva-mcgonagall",
+    name: "Minerva McGonagall",
+    house: "Gryffindor",
+    years: [1947, 1948, 1949, 1950, 1951, 1952, 1953],
+    aliases: ["Transfiguration Mistress"],
+    summary:
+      "Professor McGonagall exemplifies disciplined magic and unwavering fairness. An Animagus and Deputy Headmistress, she balances strict classroom standards with fierce protection of her students. During the Second Wizarding War she coordinates Hogwarts’ defenses, proving that strategic brilliance can accompany heartfelt loyalty to both school traditions and the fight against oppression.",
+    notableEvents: [
+      "Led Hogwarts defense during the Battle of Hogwarts",
+      "Chaired the Triwizard Tournament judges’ panel",
+    ],
+    img: "assets/img/minerva-mcgonagall.webp",
+    spoilerLevel: "low",
+    timeline: [
+      {
+        year: 1994,
+        title: "Triwizard Steward",
+        description:
+          "Oversees tasks and champions student safety during the tournament.",
+        relatedId: "minerva-mcgonagall",
+      },
+      {
+        year: 1998,
+        title: "Leads Hogwarts Defense",
+        description:
+          "Commands the castle’s protective enchantments during the final battle.",
+        relatedId: "minerva-mcgonagall",
+      },
+    ],
+  },
+  {
+    id: "rubeus-hagrid",
+    name: "Rubeus Hagrid",
+    house: "Gryffindor",
+    years: [1940, 1941, 1942],
+    aliases: ["Keeper of Keys and Grounds"],
+    summary:
+      "Rubeus Hagrid, half-giant and wholly kind, was expelled from Hogwarts yet remained its steadfast guardian. He introduces Harry to the wizarding world, tends magical creatures both cuddly and catastrophic, and joins the Order of the Phoenix. Hagrid’s loyalty, empathy, and courage quietly underpin many of the heroes’ most pivotal journeys.",
+    notableEvents: [
+      "Brought Harry to the Dursleys",
+      "Became Care of Magical Creatures professor",
+    ],
+    img: "assets/img/rubeus-hagrid.webp",
+    spoilerLevel: "low",
+    timeline: [
+      {
+        year: 1991,
+        title: "Keeper of Keys",
+        description:
+          "Reintroduces Harry to the wizarding world and delivers his Hogwarts letter.",
+        relatedId: "rubeus-hagrid",
+      },
+      {
+        year: 1995,
+        title: "Giants Envoy",
+        description:
+          "Embarks on a risky mission to broker peace with the giants for the Order.",
+        relatedId: "rubeus-hagrid",
+      },
+    ],
+  },
+  {
+    id: "draco-malfoy",
+    name: "Draco Malfoy",
+    house: "Slytherin",
+    years: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+    aliases: ["Seeker for Slytherin"],
+    summary:
+      "Draco Malfoy grows up steeped in pure-blood privilege and rivalry, arriving at Hogwarts convinced of Slytherin superiority. Over time he confronts the consequences of family allegiance to Voldemort. Fear, pride, and latent empathy collide as he navigates impossible assignments, forcing Draco toward reluctant, quietly courageous choices by the war’s conclusion.",
+    notableEvents: [
+      "Served as Slytherin Quidditch Seeker",
+      "Struggled with a mission from Voldemort",
+    ],
+    img: "assets/img/draco-malfoy.webp",
+    spoilerLevel: "high",
+    timeline: [
+      {
+        year: 1996,
+        title: "Voldemort’s Task",
+        description:
+          "Faces moral turmoil after being ordered to assassinate Dumbledore.",
+        relatedId: "draco-malfoy",
+      },
+      {
+        year: 1997,
+        title: "Room of Requirement Standoff",
+        description:
+          "Confronts Harry while wrestling with his own doubts and loyalties.",
+        relatedId: "draco-malfoy",
+      },
+    ],
+  },
+  {
+    id: "luna-lovegood",
+    name: "Luna Lovegood",
+    house: "Ravenclaw",
+    years: [1992, 1993, 1994, 1995, 1996, 1997],
+    aliases: ["Loony Lovegood"],
+    summary:
+      "Luna Lovegood approaches the wizarding world with dreamy curiosity and fearless honesty. Her unconventional insights spot patterns others miss, making her an invaluable member of Dumbledore’s Army. Luna comforts friends with empathy, fights at the Ministry and Hogwarts, and keeps Ravenclaw’s creativity alive even when darkness overshadows the school.",
+    notableEvents: [
+      "Helped rescue Sirius at the Ministry",
+      "Announced Voldemort’s defeat over the DA coins",
+    ],
+    img: "assets/img/luna-lovegood.webp",
+    spoilerLevel: "low",
+    timeline: [
+      {
+        year: 1995,
+        title: "Department of Mysteries Battle",
+        description:
+          "Stands beside Harry in the Ministry skirmish against Death Eaters.",
+        relatedId: "luna-lovegood",
+      },
+      {
+        year: 1997,
+        title: "Broadcasting Hope",
+        description:
+          "Uses enchanted coins and the Quibbler to spread news that inspires resistance.",
+        relatedId: "luna-lovegood",
+      },
+    ],
+  },
+  {
+    id: "neville-longbottom",
+    name: "Neville Longbottom",
+    house: "Gryffindor",
+    years: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+    aliases: ["Herbology Ace"],
+    summary:
+      "Neville Longbottom begins Hogwarts shy and unsure, but resilience blooms in every Herbology lesson and Dumbledore’s Army training. He grows into a courageous leader, protecting fellow students and striking critical blows against Voldemort’s forces. Neville’s journey proves that bravery can flourish slowly yet still shape the outcome of a war.",
+    notableEvents: [
+      "Stood up to the trio in first year",
+      "Destroyed Nagini with the Sword of Gryffindor",
+    ],
+    img: "assets/img/neville-longbottom.webp",
+    spoilerLevel: "high",
+    timeline: [
+      {
+        year: 1995,
+        title: "DA Standout",
+        description:
+          "Emerges as a dedicated member of Dumbledore’s Army practices.",
+        relatedId: "neville-longbottom",
+      },
+      {
+        year: 1998,
+        title: "Destroys Nagini",
+        description:
+          "Delivers the decisive blow against Voldemort’s final Horcrux during the battle.",
+        relatedId: "neville-longbottom",
+      },
+    ],
+  },
+];

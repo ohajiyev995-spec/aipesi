@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hogwarts Houses &amp; Wizards — Houses</title>
+    <meta
+      name="description"
+      content="Explore every Hogwarts house, its values, founders, and notable history."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+  </head>
+  <body data-page="houses">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a
+          class="logo"
+          href="index.html"
+          aria-label="Hogwarts Houses and Wizards home"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 2.5 3 6.75v3.21c0 5.1 3.78 9.98 9 11.54 5.22-1.56 9-6.45 9-11.54V6.75L12 2.5Zm0 2.06 6.75 3.08v2.32c0 3.95-2.78 7.76-6.75 9.17-3.97-1.41-6.75-5.22-6.75-9.17V7.64L12 4.56ZM11 8v2.5H8.5v1H11V14h1v-2.5h2.5v-1H12V8h-1Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          <span>Hogwarts Houses &amp; Wizards</span>
+        </a>
+        <button
+          class="nav-toggle"
+          data-nav-toggle
+          type="button"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          Menu
+        </button>
+        <nav
+          class="site-nav"
+          id="primary-navigation"
+          data-site-nav
+          aria-label="Primary"
+        >
+          <ul>
+            <li>
+              <a data-nav-link="home" href="index.html">Home</a>
+            </li>
+            <li>
+              <a data-nav-link="houses" href="houses.html">Houses</a>
+            </li>
+            <li>
+              <a data-nav-link="wizards" href="characters.html">Wizards</a>
+            </li>
+            <li>
+              <a data-nav-link="timeline" href="timeline.html">Timeline</a>
+            </li>
+            <li>
+              <a data-nav-link="about" href="about.html">About</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content">
+      <section class="hero container">
+        <h1>Discover Hogwarts Houses</h1>
+        <p class="subtitle">
+          Dive into the founders, values, and defining relics that continue to
+          guide each Hogwarts house.
+        </p>
+      </section>
+
+      <section class="container" aria-labelledby="house-filters-heading">
+        <header style="margin-bottom: 1.5rem;">
+          <h2 class="section-heading" id="house-filters-heading">
+            Find Your House
+          </h2>
+          <p style="max-width: 40rem; margin: 0 auto; text-align: center;">
+            Search by name or trait to learn how every house shapes its witches
+            and wizards. Select a card to reveal deeper lore, ghosts, and relics.
+          </p>
+        </header>
+
+        <form class="filters" role="search" aria-label="Filter houses">
+          <label for="house-search">
+            Search
+            <input
+              id="house-search"
+              type="search"
+              name="house-search"
+              placeholder="Search by name or quality"
+              autocomplete="off"
+            />
+          </label>
+          <label for="house-trait">
+            Trait
+            <select id="house-trait" name="house-trait">
+              <option value="all">All Traits</option>
+            </select>
+          </label>
+        </form>
+
+        <div class="card-grid" data-houses-grid></div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-social">
+          <a
+            href="https://www.linkedin.com/in/hogwarts-enthusiast/"
+            target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn profile"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4.98 3.5a2.5 2.5 0 1 1-.02 5 2.5 2.5 0 0 1 .02-5ZM3 9.25h4v11.5H3zM9.75 9.25h3.8v1.62h.05c.53-1 1.82-2.05 3.75-2.05 4 0 4.74 2.63 4.74 6.05v5.88h-4v-5.21c0-1.24-.02-2.83-1.72-2.83-1.72 0-1.98 1.34-1.98 2.74v5.3h-4z"
+                fill="currentColor"
+              ></path>
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+          <a
+            href="https://github.com/hogwarts-enthusiast"
+            target="_blank"
+            rel="noopener"
+            aria-label="GitHub profile"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 0 0-3.16 19.48c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.6.07-.6.07-.6 1 .07 1.53 1.05 1.53 1.05.9 1.52 2.37 1.08 2.95.82.1-.66.35-1.1.63-1.35-2.22-.25-4.55-1.12-4.55-4.97 0-1.1.4-1.98 1.05-2.68-.1-.26-.45-1.3.1-2.7 0 0 .85-.27 2.8 1.02a9.6 9.6 0 0 1 5.1 0c1.95-1.29 2.8-1.02 2.8-1.02.55 1.4.2 2.44.1 2.7.65.7 1.05 1.58 1.05 2.68 0 3.86-2.33 4.71-4.56 4.96.36.31.68.92.68 1.85v2.74c0 .26.18.58.68.48A10 10 0 0 0 12 2Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a
+            href="https://www.instagram.com/hogwarts-enthusiast/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram profile"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm0 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7Zm10.25 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM12 7.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+            <span>Instagram</span>
+          </a>
+        </div>
+        <p class="footer-disclaimer">
+          Fan site for educational purposes. All rights belong to J.K. Rowling
+          and respective owners.
+        </p>
+      </div>
+    </footer>
+    <script type="module" src="assets/js/main.min.js"></script>
+  </body>
+</html>
