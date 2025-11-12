@@ -1,0 +1,613 @@
+import { HOUSES, WIZARDS, TIMELINE } from "./data.js";
+
+const storage = getSafeStorage();
+const state = {
+  showSpoilers: false,
+  modal: null,
+  modalLastFocus: null,
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  initNavigation();
+  initModal();
+
+  const page = document.body.dataset.page;
+
+  switch (page) {
+    case "home":
+      initHome();
+      break;
+    case "houses":
+      initHouses();
+      break;
+    case "wizards":
+      initWizards();
+      initSpoilerBanner();
+      break;
+    case "timeline":
+      initTimeline();
+      initSpoilerBanner();
+      break;
+    default:
+      break;
+  }
+});
+
+function initNavigation() {
+  const navLinks = document.querySelectorAll(".nav__link");
+  const navToggle = document.querySelector(".nav__toggle");
+  const navList = document.querySelector(".nav__links");
+  const page = document.body.dataset.page;
+
+  navLinks.forEach((link) => {
+    const isActive = link.dataset.page === page;
+    link.setAttribute("data-active", String(isActive));
+    link.addEventListener("click", () => {
+      closeMobileNav(navToggle, navList);
+    });
+  });
+
+  if (navToggle && navList) {
+    navToggle.addEventListener("click", () => {
+      const expanded = navToggle.getAttribute("aria-expanded") === "true";
+      navToggle.setAttribute("aria-expanded", String(!expanded));
+      navList.setAttribute("data-open", String(!expanded));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (
+        navList.getAttribute("data-open") === "true" &&
+        !navList.contains(event.target) &&
+        event.target !== navToggle
+      ) {
+        closeMobileNav(navToggle, navList);
+      }
+    });
+  }
+}
+
+function closeMobileNav(toggle, list) {
+  if (!toggle || !list) return;
+  toggle.setAttribute("aria-expanded", "false");
+  list.setAttribute("data-open", "false");
+}
+
+function initHome() {
+  const featuredGrid = document.getElementById("featured-grid");
+  if (!featuredGrid) return;
+
+  const featuredHouse = pickRandom(HOUSES);
+  const featuredWizard = pickRandom(WIZARDS);
+
+  featuredGrid.innerHTML = "";
+  featuredGrid.appendChild(createHouseCard(featuredHouse, { includeButton: false }));
+  featuredGrid.appendChild(
+    createWizardCard(featuredWizard, {
+      includeButton: false,
+      showSpoilers: true,
+    })
+  );
+}
+
+function initHouses() {
+  const grid = document.getElementById("houses-grid");
+  const emptyState = document.getElementById("houses-empty");
+  const searchInput = document.getElementById("house-search");
+  const traitSelect = document.getElementById("trait-filter");
+
+  if (!grid || !searchInput || !traitSelect) return;
+
+  populateTraitFilter(traitSelect);
+
+  const filters = {
+    search: "",
+    trait: "all",
+  };
+
+  const render = () => {
+    const results = HOUSES.filter((house) => houseMatchesFilters(house, filters));
+    grid.innerHTML = "";
+
+    if (!results.length) {
+      emptyState?.removeAttribute("hidden");
+      return;
+    }
+
+    emptyState?.setAttribute("hidden", "true");
+    results.forEach((house) => {
+      grid.appendChild(createHouseCard(house, { includeButton: true }));
+    });
+  };
+
+  searchInput.addEventListener("input", (event) => {
+    filters.search = event.target.value.trim().toLowerCase();
+    render();
+  });
+
+  traitSelect.addEventListener("change", (event) => {
+    filters.trait = event.target.value;
+    render();
+  });
+
+  grid.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-open-house]");
+    if (!button) return;
+    const house = HOUSES.find((entry) => entry.id === button.dataset.id);
+    if (house) {
+      openHouseModal(house);
+    }
+  });
+
+  render();
+}
+
+function initWizards() {
+  const grid = document.getElementById("wizards-grid");
+  const emptyState = document.getElementById("wizards-empty");
+  const searchInput = document.getElementById("wizard-search");
+  const houseSelect = document.getElementById("house-filter");
+  const yearSelect = document.getElementById("year-filter");
+  const spoilerToggle = document.getElementById("spoiler-toggle-input");
+
+  if (!grid || !searchInput || !houseSelect || !yearSelect || !spoilerToggle) return;
+
+  populateHouseFilter(houseSelect);
+  populateYearFilter(yearSelect);
+
+  const savedSpoilerState = storage.getItem("hogwartsSpoilersEnabled");
+  state.showSpoilers = savedSpoilerState === null ? false : savedSpoilerState === "true";
+  spoilerToggle.checked = state.showSpoilers;
+
+  const filters = {
+    search: "",
+    house: "all",
+    year: "all",
+  };
+
+  const render = () => {
+    const results = WIZARDS.filter((wizard) => wizardMatchesFilters(wizard, filters));
+    grid.innerHTML = "";
+
+    if (!results.length) {
+      emptyState?.removeAttribute("hidden");
+      return;
+    }
+
+    emptyState?.setAttribute("hidden", "true");
+    results.forEach((wizard) => {
+      grid.appendChild(
+        createWizardCard(wizard, {
+          includeButton: true,
+          showSpoilers: state.showSpoilers,
+        })
+      );
+    });
+  };
+
+  searchInput.addEventListener("input", (event) => {
+    filters.search = event.target.value.trim().toLowerCase();
+    render();
+  });
+
+  houseSelect.addEventListener("change", (event) => {
+    filters.house = event.target.value;
+    render();
+  });
+
+  yearSelect.addEventListener("change", (event) => {
+    filters.year = event.target.value;
+    render();
+  });
+
+  spoilerToggle.addEventListener("change", (event) => {
+    state.showSpoilers = event.target.checked;
+    storage.setItem("hogwartsSpoilersEnabled", String(state.showSpoilers));
+    render();
+  });
+
+  grid.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-open-wizard]");
+    if (!button) return;
+    const wizard = WIZARDS.find((entry) => entry.id === button.dataset.id);
+    if (wizard) {
+      openWizardModal(wizard, state.showSpoilers);
+    }
+  });
+
+  render();
+}
+
+function initTimeline() {
+  const timelineContainer = document.getElementById("timeline-list");
+  const emptyState = document.getElementById("timeline-empty");
+
+  if (!timelineContainer) return;
+
+  if (!TIMELINE.length) {
+    emptyState?.removeAttribute("hidden");
+    return;
+  }
+
+  emptyState?.setAttribute("hidden", "true");
+  timelineContainer.innerHTML = "";
+
+  const grouped = groupBy(TIMELINE, (event) => event.year);
+
+  Object.entries(grouped).forEach(([year, events]) => {
+    const groupLabel = document.createElement("div");
+    groupLabel.className = "timeline__group-label";
+    groupLabel.innerHTML = `<span class="timeline__year">${year}</span>`;
+    timelineContainer.appendChild(groupLabel);
+
+    events.forEach((event) => {
+      timelineContainer.appendChild(createTimelineItem(event));
+    });
+  });
+
+  timelineContainer.addEventListener("click", (event) => {
+    const toggleButton = event.target.closest("[data-timeline-toggle]");
+    if (toggleButton) {
+      const detailId = toggleButton.dataset.target;
+      const panel = document.getElementById(detailId);
+      if (panel) {
+        const isOpen = panel.getAttribute("data-open") === "true";
+        panel.setAttribute("data-open", String(!isOpen));
+        toggleButton.setAttribute("aria-expanded", String(!isOpen));
+      }
+    }
+
+    const profileButton = event.target.closest("[data-open-profile]");
+    if (profileButton) {
+      const targetId = profileButton.dataset.id;
+      const type = profileButton.dataset.type;
+      if (type === "house") {
+        const house = HOUSES.find((entry) => entry.id === targetId);
+        if (house) {
+          openHouseModal(house);
+        }
+      } else if (type === "wizard") {
+        const wizard = WIZARDS.find((entry) => entry.id === targetId);
+        if (wizard) {
+          const spoilersEnabled = storage.getItem("hogwartsSpoilersEnabled") === "true";
+          openWizardModal(wizard, spoilersEnabled);
+        }
+      }
+    }
+  });
+}
+
+function initSpoilerBanner() {
+  const banner = document.getElementById("spoiler-banner");
+  if (!banner) return;
+
+  const dismissed = storage.getItem("hogwartsSpoilerBannerDismissed") === "true";
+  if (!dismissed) {
+    banner.hidden = false;
+  }
+
+  const dismissButton = banner.querySelector("[data-banner-dismiss]");
+  dismissButton?.addEventListener("click", () => {
+    banner.hidden = true;
+    storage.setItem("hogwartsSpoilerBannerDismissed", "true");
+  });
+}
+
+function initModal() {
+  state.modal = document.getElementById("detail-modal");
+  if (!state.modal) return;
+
+  state.modal.addEventListener("click", (event) => {
+    if (event.target === state.modal || event.target.hasAttribute("data-modal-close")) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && state.modal?.dataset.open === "true") {
+      closeModal();
+    }
+    if (event.key === "Tab" && state.modal?.dataset.open === "true") {
+      trapModalFocus(event);
+    }
+  });
+}
+
+function createHouseCard(house, { includeButton = true } = {}) {
+  const article = document.createElement("article");
+  article.className = "card";
+  article.setAttribute("role", "listitem");
+
+  const media = document.createElement("div");
+  media.className = "card__media";
+  media.innerHTML = `<img src="${house.img}" alt="${house.name} crest" loading="lazy" decoding="async" />`;
+
+  const content = document.createElement("div");
+  content.className = "card__content";
+  content.innerHTML = `
+    <span class="card__badge">House</span>
+    <h3>${house.name}</h3>
+    <p>${house.summary}</p>
+    <ul class="tag-list" aria-label="House traits">
+      ${house.traits.map((trait) => `<li>${trait}</li>`).join("")}
+    </ul>
+  `;
+
+  article.append(media, content);
+
+  if (includeButton) {
+    const actions = document.createElement("div");
+    actions.className = "card__actions";
+    actions.innerHTML = `
+      <button type="button" class="btn" data-open-house data-id="${house.id}">
+        View details
+      </button>
+    `;
+    article.appendChild(actions);
+  }
+
+  return article;
+}
+
+function createWizardCard(wizard, { includeButton = true, showSpoilers = false } = {}) {
+  const article = document.createElement("article");
+  article.className = "card";
+  article.setAttribute("role", "listitem");
+
+  const media = document.createElement("div");
+  media.className = "card__media";
+  media.innerHTML = `<img src="${wizard.img}" alt="${wizard.name}" loading="lazy" decoding="async" />`;
+
+  const content = document.createElement("div");
+  content.className = "card__content";
+
+  const summaryText =
+    wizard.spoilerLevel === "high" && !showSpoilers
+      ? `<p><em>Spoilers hidden. Toggle “Show spoilers” to reveal this profile.</em></p>`
+      : `<p>${wizard.summary}</p>`;
+
+  content.innerHTML = `
+    <span class="house-tag" data-house="${wizard.house.toLowerCase()}">${wizard.house}</span>
+    <h3>${wizard.name}</h3>
+    ${summaryText}
+  `;
+
+  article.append(media, content);
+
+  if (includeButton) {
+    const actions = document.createElement("div");
+    actions.className = "card__actions";
+    actions.innerHTML = `
+      <button type="button" class="btn" data-open-wizard data-id="${wizard.id}">
+        View details
+      </button>
+    `;
+    article.appendChild(actions);
+  }
+
+  return article;
+}
+
+function createTimelineItem(event) {
+  const article = document.createElement("article");
+  article.className = "timeline__item";
+
+  const detailsId = `${event.id}-details`;
+  article.innerHTML = `
+    <div class="timeline__heading">
+      <h3>${event.label}</h3>
+      <span class="badge">${event.type === "house" ? "House" : "Wizard"}</span>
+    </div>
+    <p>${event.summary}</p>
+    <div class="timeline__actions">
+      <button
+        type="button"
+        class="timeline__toggle"
+        data-timeline-toggle
+        data-target="${detailsId}"
+        aria-expanded="false"
+      >
+        Expand details
+        <span aria-hidden="true">▾</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn--ghost"
+        data-open-profile
+        data-type="${event.type}"
+        data-id="${event.targetId}"
+      >
+        Open profile
+      </button>
+    </div>
+    <div class="timeline__details" id="${detailsId}" data-open="false">
+      <p>${event.details}</p>
+    </div>
+  `;
+
+  return article;
+}
+
+function openHouseModal(house) {
+  const title = document.getElementById("modal-title");
+  const content = document.getElementById("modal-content");
+  if (!state.modal || !title || !content) return;
+
+  title.textContent = house.name;
+  content.innerHTML = `
+    <dl>
+      <dt>Founder</dt>
+      <dd>${house.founder}</dd>
+      <dt>Mascot</dt>
+      <dd>${house.mascot}</dd>
+      <dt>Colors</dt>
+      <dd>${house.colors.join(", ")}</dd>
+      <dt>Traits</dt>
+      <dd>${house.traits.join(", ")}</dd>
+      <dt>Relic</dt>
+      <dd>${house.relic}</dd>
+      <dt>House Ghost</dt>
+      <dd>${house.ghost}</dd>
+    </dl>
+  `;
+
+  openModal();
+}
+
+function openWizardModal(wizard, showSpoilers) {
+  const title = document.getElementById("modal-title");
+  const content = document.getElementById("modal-content");
+  if (!state.modal || !title || !content) return;
+
+  const summaryText =
+    wizard.spoilerLevel === "high" && !showSpoilers
+      ? `<p><em>Spoilers hidden. Enable spoilers to read more about ${wizard.name}.</em></p>`
+      : `<p>${wizard.summary}</p>`;
+
+  title.textContent = wizard.name;
+  content.innerHTML = `
+    ${summaryText}
+    <dl>
+      <dt>House</dt>
+      <dd>${wizard.house}</dd>
+      <dt>Aliases</dt>
+      <dd>${wizard.aliases.join(", ")}</dd>
+      <dt>Years at Hogwarts</dt>
+      <dd>${wizard.years.join(" • ")}</dd>
+      <dt>Notable Events</dt>
+      <dd>
+        <ul>
+          ${wizard.notableEvents.map((event) => `<li>${event}</li>`).join("")}
+        </ul>
+      </dd>
+      <dt>Spoiler Level</dt>
+      <dd>${wizard.spoilerLevel === "high" ? "High (major plot details)" : "Low (light spoilers)"}</dd>
+    </dl>
+  `;
+
+  openModal();
+}
+
+function openModal() {
+  if (!state.modal) return;
+  state.modalLastFocus = document.activeElement;
+  state.modal.dataset.open = "true";
+  state.modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  const focusTarget = state.modal.querySelector("[data-modal-close]") || state.modal;
+  focusTarget.focus();
+}
+
+function closeModal() {
+  if (!state.modal) return;
+  state.modal.dataset.open = "false";
+  state.modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  state.modalLastFocus?.focus();
+}
+
+function trapModalFocus(event) {
+  const focusableSelectors =
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+  const focusable = state.modal?.querySelectorAll(focusableSelectors);
+  if (!focusable || focusable.length === 0) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey) {
+    if (document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    }
+  } else if (document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function populateTraitFilter(select) {
+  const traits = new Set();
+  HOUSES.forEach((house) => {
+    house.traits.forEach((trait) => traits.add(trait));
+  });
+  Array.from(traits)
+    .sort()
+    .forEach((trait) => {
+      const option = document.createElement("option");
+      option.value = trait.toLowerCase();
+      option.textContent = trait;
+      select.appendChild(option);
+    });
+}
+
+function populateHouseFilter(select) {
+  HOUSES.forEach((house) => {
+    const option = document.createElement("option");
+    option.value = house.id;
+    option.textContent = house.name;
+    select.appendChild(option);
+  });
+}
+
+function populateYearFilter(select) {
+  const years = new Set();
+  WIZARDS.forEach((wizard) => {
+    wizard.years.forEach((year) => years.add(year));
+  });
+
+  Array.from(years)
+    .sort((a, b) => a - b)
+    .forEach((year) => {
+      const option = document.createElement("option");
+      option.value = String(year);
+      option.textContent = year;
+      select.appendChild(option);
+    });
+}
+
+function houseMatchesFilters(house, filters) {
+  const matchesSearch =
+    !filters.search || house.name.toLowerCase().includes(filters.search) || house.summary.toLowerCase().includes(filters.search);
+  const matchesTrait =
+    filters.trait === "all" || house.traits.some((trait) => trait.toLowerCase() === filters.trait);
+  return matchesSearch && matchesTrait;
+}
+
+function wizardMatchesFilters(wizard, filters) {
+  const matchesSearch =
+    !filters.search ||
+    wizard.name.toLowerCase().includes(filters.search) ||
+    wizard.summary.toLowerCase().includes(filters.search);
+  const matchesHouse = filters.house === "all" || wizard.house.toLowerCase() === filters.house;
+  const matchesYear =
+    filters.year === "all" || wizard.years.map(String).includes(filters.year);
+  return matchesSearch && matchesHouse && matchesYear;
+}
+
+function pickRandom(collection) {
+  return collection[Math.floor(Math.random() * collection.length)];
+}
+
+function groupBy(collection, keyGetter) {
+  return collection.reduce((acc, item) => {
+    const key = keyGetter(item);
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(item);
+    return acc;
+  }, {});
+}
+
+function getSafeStorage() {
+  try {
+    const testKey = "__hogwarts_test__";
+    window.localStorage.setItem(testKey, "1");
+    window.localStorage.removeItem(testKey);
+    return window.localStorage;
+  } catch (error) {
+    return {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+    };
+  }
+}
