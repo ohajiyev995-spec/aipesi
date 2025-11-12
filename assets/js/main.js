@@ -1,0 +1,410 @@
+(() => {
+  const state = {
+    houseTraits: new Set(),
+    selectedTraits: new Set(),
+    spoilerReveal: false
+  };
+
+  const qs = (selector, scope = document) => scope.querySelector(selector);
+
+  const toggleNavigation = () => {
+    const nav = qs(".site-nav");
+    const toggle = qs(".site-nav__toggle");
+    if (!nav || !toggle) return;
+
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      nav.dataset.open = (!expanded).toString();
+    });
+
+    window.addEventListener("keyup", (event) => {
+      if (event.key === "Escape") {
+        toggle.setAttribute("aria-expanded", "false");
+        delete nav.dataset.open;
+      }
+    });
+  };
+
+  const buildFeaturedCards = () => {
+    if (!window.HOUSES || !window.WIZARDS) return;
+    if (document.body.dataset.page !== "home") return;
+
+    const houseCard = qs("[data-featured-house]");
+    const wizardCard = qs("[data-featured-wizard]");
+    if (!houseCard || !wizardCard) return;
+
+    const pickRandom = (collection) => collection[Math.floor(Math.random() * collection.length)];
+    const house = pickRandom(window.HOUSES);
+    const wizard = pickRandom(window.WIZARDS);
+
+    const renderCardImage = (card, item) => {
+      let image = card.querySelector("img");
+      if (!image) {
+        image = document.createElement("img");
+        image.alt = "";
+        image.loading = "lazy";
+        image.decoding = "async";
+        card.prepend(image);
+      }
+      image.src = item.img;
+      image.alt = `${item.name}`;
+    };
+
+    renderCardImage(houseCard, house);
+    houseCard.querySelector(".card__title").textContent = house.name;
+    houseCard.querySelector(".card__body").textContent = house.summary;
+    const houseMeta = houseCard.querySelector(".card__meta");
+    houseMeta.innerHTML = "";
+    houseMeta.insertAdjacentHTML(
+      "beforeend",
+      `<span class="badge">Founder:&nbsp;${house.founder}</span>`
+    );
+    houseMeta.insertAdjacentHTML(
+      "beforeend",
+      `<span class="badge">Relic:&nbsp;${house.relic}</span>`
+    );
+
+    renderCardImage(wizardCard, wizard);
+    wizardCard.querySelector(".card__title").textContent = wizard.name;
+    wizardCard.querySelector(".card__body").textContent = wizard.summary;
+    const wizardMeta = wizardCard.querySelector(".card__meta");
+    wizardMeta.innerHTML = "";
+    wizardMeta.insertAdjacentHTML(
+      "beforeend",
+      `<span class="badge badge--house">${wizard.house}</span>`
+    );
+    wizardMeta.insertAdjacentHTML(
+      "beforeend",
+      `<span class="badge">Alias:&nbsp;${wizard.aliases[0] || "Unknown"}</span>`
+    );
+  };
+
+  const buildTraitFilters = () => {
+    if (document.body.dataset.page !== "houses") return;
+    const container = qs("#traitFilters");
+    if (!container || !window.HOUSES) return;
+
+    window.HOUSES.forEach((house) => {
+      house.traits.forEach((trait) => state.houseTraits.add(trait));
+    });
+
+    Array.from(state.houseTraits)
+      .sort()
+      .forEach((trait, index) => {
+        const id = `trait-${index}`;
+        container.insertAdjacentHTML(
+          "beforeend",
+          `<label for="${id}">
+             <input type="checkbox" id="${id}" value="${trait}" />
+             <span>${trait}</span>
+           </label>`
+        );
+      });
+
+    container.addEventListener("change", (event) => {
+      if (!(event.target instanceof HTMLInputElement)) return;
+      const { value, checked } = event.target;
+      if (checked) {
+        state.selectedTraits.add(value);
+      } else {
+        state.selectedTraits.delete(value);
+      }
+      renderHouseCards();
+    });
+  };
+
+  const renderHouseCards = () => {
+    if (document.body.dataset.page !== "houses") return;
+    const grid = qs("#housesGrid");
+    const empty = qs("#housesEmptyState");
+    if (!grid || !window.HOUSES || !empty) return;
+
+    const searchValue = qs("#houseSearch")?.value.trim().toLowerCase() ?? "";
+
+    const filtered = window.HOUSES.filter((house) => {
+      const matchesSearch = house.name.toLowerCase().includes(searchValue);
+      const traitArray = Array.from(state.selectedTraits);
+      const matchesTraits =
+        traitArray.length === 0 || traitArray.every((trait) => house.traits.includes(trait));
+      return matchesSearch && matchesTraits;
+    });
+
+    grid.innerHTML = "";
+
+    if (filtered.length === 0) {
+      empty.hidden = false;
+      return;
+    }
+
+    empty.hidden = true;
+
+    filtered.forEach((house) => {
+      const article = document.createElement("article");
+      article.className = "card";
+      article.innerHTML = `
+        <img src="${house.img}" alt="${house.name} crest" loading="lazy" decoding="async" />
+        <div class="card__eyebrow">House</div>
+        <h3 class="card__title">${house.name}</h3>
+        <p>${house.summary}</p>
+          <div class="card__meta">
+            <span class="badge">Founder:&nbsp;${house.founder}</span>
+            <span class="badge">Mascot:&nbsp;${house.mascot}</span>
+            <span class="badge">Ghost:&nbsp;${house.ghost}</span>
+            <span class="badge">Relic:&nbsp;${house.relic}</span>
+        </div>
+        <div class="card__meta">
+          ${house.traits
+            .map((trait) => `<span class="badge">${trait}</span>`)
+            .join("")}
+        </div>
+      `;
+      grid.appendChild(article);
+    });
+  };
+
+  const buildWizardFilters = () => {
+    if (document.body.dataset.page !== "wizards") return;
+    if (!window.WIZARDS) return;
+
+    const houseSelect = qs("#wizardHouse");
+    const yearSelect = qs("#wizardYear");
+    if (!houseSelect || !yearSelect) return;
+
+    const houses = Array.from(new Set(window.WIZARDS.map((wizard) => wizard.house))).sort();
+    houses.forEach((house) => {
+      const option = document.createElement("option");
+      option.value = house;
+      option.textContent = house;
+      houseSelect.appendChild(option);
+    });
+
+    const years = Array.from(new Set(window.WIZARDS.flatMap((wizard) => wizard.years))).sort(
+      (a, b) => a - b
+    );
+    years.forEach((year) => {
+      const option = document.createElement("option");
+      option.value = String(year);
+      option.textContent = year;
+      yearSelect.appendChild(option);
+    });
+  };
+
+  const renderWizardCards = () => {
+    if (document.body.dataset.page !== "wizards") return;
+    const grid = qs("#wizardsGrid");
+    const empty = qs("#wizardsEmptyState");
+    if (!grid || !empty || !window.WIZARDS) return;
+
+    const searchValue = qs("#wizardSearch")?.value.trim().toLowerCase() ?? "";
+    const houseValue = qs("#wizardHouse")?.value ?? "";
+    const yearValue = qs("#wizardYear")?.value ?? "";
+    const spoilerToggle = qs("#spoilerToggle");
+    state.spoilerReveal = spoilerToggle instanceof HTMLInputElement ? spoilerToggle.checked : false;
+
+    const filtered = window.WIZARDS.filter((wizard) => {
+      const matchesSearch = wizard.name.toLowerCase().includes(searchValue);
+      const matchesHouse = !houseValue || wizard.house === houseValue;
+      const matchesYear = !yearValue || wizard.years.includes(Number(yearValue));
+      return matchesSearch && matchesHouse && matchesYear;
+    });
+
+    grid.innerHTML = "";
+
+    if (filtered.length === 0) {
+      empty.hidden = false;
+      return;
+    }
+
+    empty.hidden = true;
+
+    filtered.forEach((wizard) => {
+      const article = document.createElement("article");
+      article.className = "card wizard-card";
+        const hideSummary = wizard.spoilerLevel === "high" && !state.spoilerReveal;
+        const summaryAttributes = hideSummary
+          ? 'class="wizard-card__summary is-hidden" aria-hidden="true"'
+          : 'class="wizard-card__summary"';
+        const spoilerNote = hideSummary
+          ? '<p class="spoiler-note" role="note">Spoiler hidden &mdash; toggle to view.</p>'
+          : "";
+      article.innerHTML = `
+        <div class="wizard-card__header">
+          <div class="wizard-card__image">
+            <img src="${wizard.img}" alt="${wizard.name}" loading="lazy" decoding="async" />
+          </div>
+          <div>
+            <h3 class="wizard-card__name">${wizard.name}</h3>
+              <div class="card__meta">
+                <span class="badge badge--house">${wizard.house}</span>
+                <span class="badge">Alias:&nbsp;${wizard.aliases[0] || "Unknown"}</span>
+                <span class="badge">Spoiler:&nbsp;${wizard.spoilerLevel}</span>
+            </div>
+          </div>
+        </div>
+          <p ${summaryAttributes}>${wizard.summary}</p>
+          ${spoilerNote}
+        <div class="card__meta">
+          ${wizard.notableEvents
+            .map((event) => `<span class="badge">${event}</span>`)
+            .join("")}
+        </div>
+      `;
+      grid.appendChild(article);
+    });
+  };
+
+  const setupWizardFilters = () => {
+    if (document.body.dataset.page !== "wizards") return;
+    const form = qs("#wizardFilters");
+    if (!form) return;
+
+    form.addEventListener("input", () => renderWizardCards());
+  };
+
+  const buildTimeline = () => {
+    if (document.body.dataset.page !== "timeline") return;
+    const container = qs("#timelineContainer");
+    const empty = qs("#timelineEmptyState");
+    if (!container || !empty || !window.HOUSES || !window.WIZARDS) return;
+
+    const events = [];
+
+    window.HOUSES.forEach((house) => {
+      (house.timeline || []).forEach((event) => {
+        events.push({
+          year: event.year,
+          title: `${house.name}: ${event.title}`,
+          description: event.description,
+          source: "house",
+          house: house.name
+        });
+      });
+    });
+
+    window.WIZARDS.forEach((wizard) => {
+      wizard.notableEvents.forEach((event, index) => {
+        const years = wizard.years || [];
+        const year = years[index] || years[years.length - 1] || "Unknown";
+        events.push({
+          year,
+          title: `${wizard.name}: ${event}`,
+          description: wizard.summary,
+          source: "wizard",
+          wizard: wizard.name,
+          house: wizard.house,
+          spoilerLevel: wizard.spoilerLevel
+        });
+      });
+    });
+
+    events.sort((a, b) => {
+      const yearA = Number(a.year);
+      const yearB = Number(b.year);
+      if (Number.isNaN(yearA) && Number.isNaN(yearB)) return 0;
+      if (Number.isNaN(yearA)) return 1;
+      if (Number.isNaN(yearB)) return -1;
+      return yearA - yearB;
+    });
+
+    const grouped = events.reduce((map, event) => {
+      const key = event.year;
+      if (!map.has(key)) {
+        map.set(key, []);
+      }
+      map.get(key).push(event);
+      return map;
+    }, new Map());
+
+    container.innerHTML = "";
+
+    if (grouped.size === 0) {
+      empty.hidden = false;
+      return;
+    }
+
+    empty.hidden = true;
+
+    grouped.forEach((groupEvents, year) => {
+      const section = document.createElement("section");
+      section.className = "timeline__year";
+      const heading = document.createElement("h3");
+      heading.textContent = year;
+      section.appendChild(heading);
+
+      const list = document.createElement("div");
+      list.className = "timeline__events";
+
+      groupEvents.forEach((event) => {
+        const article = document.createElement("article");
+        article.className = "timeline-event";
+
+        const details = document.createElement("details");
+        const summary = document.createElement("summary");
+        summary.textContent = event.title;
+        details.appendChild(summary);
+
+        const meta = document.createElement("div");
+        meta.className = "timeline-event__meta";
+          if (event.source === "wizard") {
+            meta.innerHTML = `
+            <span>Wizard:&nbsp;${event.wizard}</span>
+            <span>House:&nbsp;${event.house}</span>
+            <span>Spoiler&nbsp;level:&nbsp;${event.spoilerLevel}</span>
+          `;
+          } else {
+            meta.innerHTML = `<span>House:&nbsp;${event.house}</span>`;
+          }
+        details.appendChild(meta);
+
+        const body = document.createElement("div");
+        body.className = "timeline-event__body";
+        body.textContent = event.description;
+        details.appendChild(body);
+
+        article.appendChild(details);
+        list.appendChild(article);
+      });
+
+      section.appendChild(list);
+      container.appendChild(section);
+    });
+  };
+
+  const setupSpoilerBanner = () => {
+    const banner = qs("[data-banner]");
+    const dismiss = qs("[data-banner-dismiss]");
+    if (!banner || !dismiss) return;
+
+    const storageKey = "hogwartsSpoilerDismissed";
+    const dismissed = window.localStorage.getItem(storageKey);
+    if (dismissed !== "true") {
+      banner.hidden = false;
+    }
+
+    dismiss.addEventListener("click", () => {
+      banner.hidden = true;
+      window.localStorage.setItem(storageKey, "true");
+    });
+  };
+
+  const bindHouseSearch = () => {
+    if (document.body.dataset.page !== "houses") return;
+    const search = qs("#houseSearch");
+    if (!search) return;
+    search.addEventListener("input", () => renderHouseCards());
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    toggleNavigation();
+    setupSpoilerBanner();
+    buildFeaturedCards();
+    buildTraitFilters();
+    bindHouseSearch();
+    renderHouseCards();
+    buildWizardFilters();
+    setupWizardFilters();
+    renderWizardCards();
+    buildTimeline();
+  });
+})();
