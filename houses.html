@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Browse every Hogwarts house, their founders, traits, and legacies." />
+    <title>Hogwarts Houses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+    <link rel="preload" href="assets/css/styles.min.css" as="style" />
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+  </head>
+  <body data-page="houses">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-wrapper">
+      <header>
+        <div class="container site-header">
+          <a class="brand" href="index.html" aria-label="Hogwarts: Houses and Wizards home">
+            Hogwarts <span>EST. 990</span>
+          </a>
+          <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+          </button>
+          <nav class="site-nav" data-nav-menu aria-label="Primary navigation">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="houses.html" aria-current="page">Houses</a></li>
+              <li><a href="wizards.html">Wizards</a></li>
+              <li><a href="timeline.html">Timeline</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="container" aria-labelledby="houses-heading">
+          <h1 id="houses-heading">The Four Hogwarts Houses</h1>
+          <p>Explore every house crest, learn about each founder, and discover the traits that define every Sorting Hat decision.</p>
+
+          <div class="controls" role="region" aria-labelledby="house-filters-heading">
+            <h2 id="house-filters-heading" class="sr-only">Filter houses</h2>
+            <fieldset>
+              <legend>Search</legend>
+              <label for="house-search" class="sr-only">Search houses by name</label>
+              <input id="house-search" type="search" name="search" placeholder="Search by name or founder" autocomplete="off" />
+            </fieldset>
+            <fieldset>
+              <legend>Traits</legend>
+              <div id="trait-filters" class="checkbox-grid" role="group" aria-label="Filter by traits"></div>
+            </fieldset>
+          </div>
+
+          <div id="houses-grid" class="card-grid" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="container site-footer">
+          <div>
+            <h2 class="sr-only">Connect</h2>
+            <div class="social-links">
+              <a href="https://www.linkedin.com/in/<MY-USERNAME>/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://github.com/<MY-USERNAME>" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://www.instagram.com/<MY-USERNAME>/" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+          <p class="disclaimer">Fan site for educational purposes. All rights belong to their respective owners.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script defer src="assets/js/data.min.js"></script>
+    <script defer src="assets/js/main.min.js"></script>
+  </body>
+</html>
