@@ -119,16 +119,42 @@
       </footer>
     </div>
 
-    <div class="modal" id="detail-modal" aria-hidden="true">
-      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <button class="modal__close" type="button" data-modal-close aria-label="Close dialog">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h2 class="modal__title" id="modal-title"></h2>
-        <div class="modal__content" id="modal-content"></div>
-      </div>
-    </div>
+      <div
+        id="detail-modal"
+        class="modal is-hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="detail-title"
+        aria-describedby="detail-summary"
+      >
+        <div class="modal__backdrop" data-close="backdrop"></div>
+        <div class="modal__dialog" role="document">
+          <button class="modal__close" aria-label="Close details" data-close="x">×</button>
 
-    <script type="module" src="assets/js/main.min.js" defer></script>
+          <div class="modal__media">
+            <img id="detail-img" src="" alt="" loading="lazy" />
+            <span id="detail-type" class="badge"></span>
+          </div>
+
+          <div class="modal__content">
+            <h2 id="detail-title"></h2>
+            <p id="detail-summary"></p>
+
+            <div id="detail-meta" class="meta"></div>
+
+            <div class="stack">
+              <h3 class="subhead">Aliases</h3>
+              <ul id="detail-aliases"></ul>
+            </div>
+
+            <div class="stack">
+              <h3 class="subhead">Notable Episodes</h3>
+              <ul id="detail-episodes"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script type="module" src="assets/js/main.min.js" defer></script>
   </body>
 </html>
