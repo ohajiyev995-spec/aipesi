@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A fan-made mini-site celebrating the Hogwarts houses and wizards that shaped the wizarding world." />
+    <title>Hogwarts: Houses & Wizards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+    <link rel="preload" href="assets/css/styles.min.css" as="style" />
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-wrapper">
+      <header>
+        <div class="container site-header">
+          <a class="brand" href="index.html" aria-label="Hogwarts: Houses and Wizards home">
+            Hogwarts <span>EST. 990</span>
+          </a>
+          <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+          </button>
+          <nav class="site-nav" data-nav-menu aria-label="Primary navigation">
+            <ul>
+              <li><a href="index.html" aria-current="page">Home</a></li>
+              <li><a href="houses.html">Houses</a></li>
+              <li><a href="wizards.html">Wizards</a></li>
+              <li><a href="timeline.html">Timeline</a></li>
+              <li><a href="about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="hero">
+          <div class="container hero-card">
+            <svg class="sparkle" viewBox="0 0 120 120" aria-hidden="true">
+              <defs>
+                <radialGradient id="sparkleGradient" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#8AB4F8" stop-opacity="0.9" />
+                  <stop offset="60%" stop-color="#8AB4F8" stop-opacity="0.2" />
+                  <stop offset="100%" stop-color="#8AB4F8" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <circle cx="60" cy="60" r="60" fill="url(#sparkleGradient)" />
+              <g stroke="#E6EDF3" stroke-width="2" stroke-linecap="round">
+                <line x1="60" y1="18" x2="60" y2="42" />
+                <line x1="60" y1="78" x2="60" y2="102" />
+                <line x1="18" y1="60" x2="42" y2="60" />
+                <line x1="78" y1="60" x2="102" y2="60" />
+              </g>
+            </svg>
+            <h1>Hogwarts: Houses & Wizards</h1>
+            <p>
+              A fan-made guide to the people and houses that shaped the wizarding world. Explore legendary founders, daring students, and the pivotal moments that defined their stories.
+            </p>
+            <div class="cta-group">
+              <a class="button" href="houses.html">Discover the Houses</a>
+              <a class="button secondary" href="wizards.html">Meet the Wizards</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="container" aria-labelledby="featured-heading">
+          <h2 id="featured-heading">Featured</h2>
+          <p>Begin your journey with a spotlight on one iconic house and wizard, refreshed from our living archive.</p>
+          <div class="featured-grid">
+            <div data-featured-house aria-live="polite"></div>
+            <div data-featured-wizard aria-live="polite"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="container site-footer">
+          <div>
+            <h2 class="sr-only">Connect</h2>
+            <div class="social-links">
+              <a href="https://www.linkedin.com/in/<MY-USERNAME>/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://github.com/<MY-USERNAME>" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://www.instagram.com/<MY-USERNAME>/" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+          <p class="disclaimer">Fan site for educational purposes. All rights belong to their respective owners.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script defer src="assets/js/data.min.js"></script>
+    <script defer src="assets/js/main.min.js"></script>
+  </body>
+</html>
