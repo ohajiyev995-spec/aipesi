@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hogwarts: Houses & Wizards</title>
+    <meta
+      name="description"
+      content="Explore the magical world of Hogwarts through its legendary houses and the wizards who shaped their history."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <div class="site-nav__brand">
+          <a class="site-nav__logo" href="index.html">Hogwarts: Houses & Wizards</a>
+          <button
+            class="site-nav__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-menu"
+          >
+            <span class="visually-hidden">Toggle navigation</span>
+            <span aria-hidden="true" class="site-nav__toggle-icon"></span>
+          </button>
+        </div>
+        <ul id="primary-menu" class="site-nav__list">
+          <li><a class="is-active" aria-current="page" href="index.html">Home</a></li>
+          <li><a href="houses.html">Houses</a></li>
+          <li><a href="wizards.html">Wizards</a></li>
+          <li><a href="timeline.html">Timeline</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main" class="site-main">
+      <section class="hero">
+        <div class="hero__content">
+          <h1>Hogwarts: Houses & Wizards</h1>
+          <p class="hero__subtitle">
+            A fan-made guide to the people and houses that shaped the wizarding world.
+          </p>
+          <a class="button button--primary" href="houses.html">Explore the Houses</a>
+        </div>
+        <div class="hero__visual">
+          <svg class="hero__sparkles" viewBox="0 0 240 240" aria-hidden="true">
+            <defs>
+              <radialGradient id="sparkleGradient" fx="50%" fy="0%" r="75%">
+                <stop offset="0%" stop-color="#8AB4F8" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#8AB4F8" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <circle cx="120" cy="120" r="120" fill="url(#sparkleGradient)"></circle>
+            <g class="hero__spark">
+              <path d="M120 40 L126 96 L180 110 L126 124 L120 180 L114 124 L60 110 L114 96 Z"></path>
+            </g>
+          </svg>
+        </div>
+      </section>
+      <section class="section">
+        <header class="section__header">
+          <h2>Featured Highlights</h2>
+          <p>Discover a standout house and wizard handpicked from our enchanted archives.</p>
+        </header>
+        <div class="featured-grid">
+          <article class="card featured-card" data-featured-house>
+            <div class="card__eyebrow">Featured House</div>
+            <h3 class="card__title"></h3>
+            <p class="card__body"></p>
+            <div class="card__meta"></div>
+          </article>
+          <article class="card featured-card" data-featured-wizard>
+            <div class="card__eyebrow">Featured Wizard</div>
+            <h3 class="card__title"></h3>
+            <p class="card__body"></p>
+            <div class="card__meta"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer__links">
+        <a href="https://www.linkedin.com/in/hogwartsfan/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/hogwartsfan" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.instagram.com/hogwartsfan/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="site-footer__disclaimer">
+        Fan site for educational purposes. All rights belong to their respective owners.
+      </p>
+    </footer>
+    <script src="assets/js/data.min.js" defer></script>
+    <script src="assets/js/main.min.js" defer></script>
+  </body>
+</html>

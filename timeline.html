@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hogwarts Timeline</title>
+    <meta
+      name="description"
+      content="Witness the unfolding history of Hogwarts through house milestones and wizarding achievements."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+  </head>
+  <body data-page="timeline">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <div class="site-nav__brand">
+          <a class="site-nav__logo" href="index.html">Hogwarts: Houses & Wizards</a>
+          <button
+            class="site-nav__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-menu"
+          >
+            <span class="visually-hidden">Toggle navigation</span>
+            <span aria-hidden="true" class="site-nav__toggle-icon"></span>
+          </button>
+        </div>
+        <ul id="primary-menu" class="site-nav__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="houses.html">Houses</a></li>
+          <li><a href="wizards.html">Wizards</a></li>
+          <li><a class="is-active" aria-current="page" href="timeline.html">Timeline</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="spoiler-banner" data-banner hidden>
+      <p>This site may contain major plot spoilers.</p>
+      <button type="button" class="button button--ghost" data-banner-dismiss>
+        Dismiss spoiler warning
+      </button>
+    </div>
+    <main id="main" class="site-main">
+      <section class="page-hero">
+        <div class="page-hero__content">
+          <h1>Hogwarts Timeline</h1>
+          <p>
+            Follow the eras of Hogwarts with milestones from each house and the legendary achievements of
+            the witches and wizards who called it home.
+          </p>
+        </div>
+      </section>
+      <section class="section">
+        <header class="section__header">
+          <h2>Era Highlights</h2>
+          <p>
+            The timeline blends house history and wizarding feats. Expand each event to uncover deeper
+            context and lore.
+          </p>
+        </header>
+        <div class="timeline" id="timelineContainer" aria-live="polite"></div>
+        <p class="empty-state" id="timelineEmptyState" hidden>
+          Timeline events are currently unavailable. Please try refreshing the page.
+        </p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer__links">
+        <a href="https://www.linkedin.com/in/hogwartsfan/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/hogwartsfan" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.instagram.com/hogwartsfan/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="site-footer__disclaimer">
+        Fan site for educational purposes. All rights belong to their respective owners.
+      </p>
+    </footer>
+    <script src="assets/js/data.min.js" defer></script>
+    <script src="assets/js/main.min.js" defer></script>
+  </body>
+</html>

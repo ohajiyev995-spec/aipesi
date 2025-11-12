@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hogwarts Houses</title>
+    <meta
+      name="description"
+      content="Explore the four Hogwarts houses, their founders, traits, and magical legacies."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+  </head>
+  <body data-page="houses">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <div class="site-nav__brand">
+          <a class="site-nav__logo" href="index.html">Hogwarts: Houses & Wizards</a>
+          <button
+            class="site-nav__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-menu"
+          >
+            <span class="visually-hidden">Toggle navigation</span>
+            <span aria-hidden="true" class="site-nav__toggle-icon"></span>
+          </button>
+        </div>
+        <ul id="primary-menu" class="site-nav__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a class="is-active" aria-current="page" href="houses.html">Houses</a></li>
+          <li><a href="wizards.html">Wizards</a></li>
+          <li><a href="timeline.html">Timeline</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main" class="site-main">
+      <section class="page-hero">
+        <div class="page-hero__content">
+          <h1>Hogwarts Houses</h1>
+          <p>
+            Dive into the legacy of each house. Discover their founders, treasured relics, house ghosts,
+            and the values they instill in every witch and wizard.
+          </p>
+        </div>
+      </section>
+      <section class="section">
+        <header class="section__header">
+          <h2>Refine Your Search</h2>
+          <p>
+            Filter the houses by name or focus on the personality traits that resonate with you the most.
+          </p>
+        </header>
+        <form class="filters" id="houseFilters">
+          <div class="filters__group">
+            <label for="houseSearch">Search by name</label>
+            <input
+              id="houseSearch"
+              type="search"
+              name="houseSearch"
+              placeholder="Search Gryffindor, Hufflepuff, Ravenclaw, Slytherin..."
+            />
+          </div>
+          <fieldset class="filters__group filters__group--checkboxes" aria-labelledby="traitFilterLabel">
+            <legend id="traitFilterLabel">Filter by traits</legend>
+            <div id="traitFilters" class="filters__options" role="group" aria-live="polite"></div>
+          </fieldset>
+        </form>
+      </section>
+      <section class="section">
+        <header class="section__header">
+          <h2>House Profiles</h2>
+          <p>Each card is a glimpse into the history, magic, and spirit that define a Hogwarts house.</p>
+        </header>
+        <div class="card-grid" id="housesGrid" aria-live="polite"></div>
+        <p class="empty-state" id="housesEmptyState" hidden>No houses match your current filters.</p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer__links">
+        <a href="https://www.linkedin.com/in/hogwartsfan/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/hogwartsfan" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.instagram.com/hogwartsfan/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="site-footer__disclaimer">
+        Fan site for educational purposes. All rights belong to their respective owners.
+      </p>
+    </footer>
+    <script src="assets/js/data.min.js" defer></script>
+    <script src="assets/js/main.min.js" defer></script>
+  </body>
+</html>
