@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Profiles of notable witches and wizards across the wizarding world with spoiler-safe summaries."
+    />
+    <title>Wizards | Hogwarts: Houses & Wizards</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+    <script src="assets/js/data.min.js" defer></script>
+    <script src="assets/js/main.min.js" defer></script>
+  </head>
+  <body data-page="wizards">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav-container">
+        <a class="brand" href="index.html" aria-label="Hogwarts: Houses & Wizards home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          Hogwarts
+        </a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-text">Menu</span>
+          <span class="nav-toggle-icon" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="primary-navigation">
+          <ul>
+            <li><a href="index.html" data-nav="home">Home</a></li>
+            <li><a href="houses.html" data-nav="houses">Houses</a></li>
+            <li><a href="wizards.html" data-nav="wizards">Wizards</a></li>
+            <li><a href="timeline.html" data-nav="timeline">Timeline</a></li>
+            <li><a href="about.html" data-nav="about">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="spoiler-banner" data-spoiler-banner hidden>
+      <div class="container banner-content">
+        <p>This site may contain major plot spoilers.</p>
+        <button type="button" class="btn btn-tertiary" data-banner-dismiss>Dismiss</button>
+      </div>
+    </div>
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Wizard archive</p>
+          <h1>Witches &amp; Wizards of Note</h1>
+          <p class="section-intro">
+            Filter through notable students, professors, and allies from the Hogwarts era. Toggle
+            spoilers whenever you want to peek ahead.
+          </p>
+        </div>
+      </section>
+      <section class="filters" aria-labelledby="wizard-tools">
+        <div class="container">
+          <h2 id="wizard-tools" class="visually-hidden">Search and filter wizard profiles</h2>
+          <form class="filter-form" id="wizard-controls">
+            <div class="form-group search-group">
+              <label for="wizard-search">Search wizards</label>
+              <input
+                type="search"
+                id="wizard-search"
+                name="wizardSearch"
+                placeholder="Search by wizard name"
+                autocomplete="off"
+              />
+            </div>
+            <fieldset class="form-group checkbox-group">
+              <legend>Filter by house</legend>
+              <div class="checkbox-grid" id="wizard-house-filters">
+                <p class="loading-copy">Preparing house filters…</p>
+              </div>
+            </fieldset>
+            <fieldset class="form-group checkbox-group">
+              <legend>Filter by year</legend>
+              <div class="checkbox-grid" id="wizard-year-filters">
+                <p class="loading-copy">Gathering years…</p>
+              </div>
+            </fieldset>
+            <div class="form-group toggle-group">
+              <label class="toggle">
+                <input type="checkbox" id="spoiler-toggle" name="spoilerToggle" />
+                <span class="toggle-label">Show spoilers</span>
+              </label>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="grid-section" aria-labelledby="wizard-grid-heading">
+        <div class="container">
+          <h2 id="wizard-grid-heading" class="visually-hidden">Wizard cards</h2>
+          <div class="card-grid" id="wizard-grid" role="list"></div>
+          <p class="empty-state" id="wizard-empty" hidden>No profiles match your search yet.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h2 class="footer-heading">Stay Connected</h2>
+          <ul class="footer-social">
+            <li>
+              <a href="https://www.linkedin.com/in/wizardfan/" target="_blank" rel="noopener"
+                >LinkedIn</a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/wizardfan" target="_blank" rel="noopener">GitHub</a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/wizardfan/" target="_blank" rel="noopener"
+                >Instagram</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="footer-heading">Disclaimer</h2>
+          <p class="footer-copy">
+            Fan site for educational purposes. All rights belong to their respective owners.
+          </p>
+        </div>
+      </div>
+      <p class="footer-note">© <span id="footer-year">2025</span> Hogwarts: Houses &amp; Wizards</p>
+    </footer>
+    <div class="modal-backdrop" data-modal-overlay hidden></div>
+    <div class="modal" data-modal aria-hidden="true">
+      <div
+        class="modal-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        tabindex="-1"
+      >
+        <button type="button" class="modal-close" data-modal-close aria-label="Close dialog">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 id="modal-title"></h2>
+        <div class="modal-content" data-modal-content></div>
+      </div>
+    </div>
+  </body>
+</html>
