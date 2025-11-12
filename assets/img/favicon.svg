@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hogwarts crest">
+  <defs>
+    <linearGradient id="crest-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8AB4F8" />
+      <stop offset="100%" stop-color="#4A6FBF" />
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#crest-bg)" stroke="#E6EDF3" stroke-width="2" />
+  <path d="M32 12 L46 26 L32 40 L18 26 Z" fill="#0B0D12" opacity="0.85" />
+  <circle cx="32" cy="32" r="10" fill="#E6EDF3" opacity="0.85" />
+  <circle cx="32" cy="32" r="4" fill="#0B0D12" />
+</svg>
